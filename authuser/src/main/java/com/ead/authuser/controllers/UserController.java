@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,13 +36,8 @@ public class UserController {
     @GetMapping
     public ResponseEntity<Page<UserModel>> getAllUsers(SpecificationTemplate.UserSpec spec,
                                                        @PageableDefault(page = 0, size = 10, sort = "userId",
-                                                               direction = Sort.Direction.ASC) Pageable pageable,
-                                                       @RequestParam(required = false) UUID courseId) {
-
-        var specification = (courseId != null) ? SpecificationTemplate.userCourseId(courseId).and(spec) : spec;
-
-        Page<UserModel> userModelsPage = userService.findAll(specification, pageable);
-
+                                                               direction = Sort.Direction.ASC) Pageable pageable) {
+        Page<UserModel> userModelsPage = userService.findAll(spec, pageable);
         if (!userModelsPage.isEmpty()) {
             userModelsPage.forEach(item -> {
                 item.add(linkTo(methodOn(UserController.class).getUserById(item.getUserId())).withSelfRel());
