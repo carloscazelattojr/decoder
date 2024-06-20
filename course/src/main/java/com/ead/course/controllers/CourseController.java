@@ -35,6 +35,7 @@ public class CourseController {
 
     @Autowired
     private CourseValidator courseValidator;
+
     @Autowired
     private View error;
 
@@ -94,12 +95,11 @@ public class CourseController {
                                                                    direction = Sort.Direction.ASC) Pageable pageable,
                                                            @RequestParam(required = false) UUID userId) {
 
-        var specification = userId != null ? SpecificationTemplate.courseUserId(userId).and(spec) : spec;
-        return ResponseEntity.status(HttpStatus.OK).body(courseService.findAll(specification, pageable));
+        return ResponseEntity.status(HttpStatus.OK).body(courseService.findAll(spec, pageable));
     }
 
     @GetMapping("/{courseId}")
-    public ResponseEntity<Object> findUserById(@PathVariable(value = "courseId") UUID courseId) {
+    public ResponseEntity<Object> getOneCourse(@PathVariable(value = "courseId") UUID courseId) {
         Optional<CourseModel> courseModelOptional = courseService.findById(courseId);
 
         return courseModelOptional.<ResponseEntity<Object>>map(courseModel ->
