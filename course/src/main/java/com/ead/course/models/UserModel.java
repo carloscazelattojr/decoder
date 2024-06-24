@@ -18,11 +18,10 @@ import java.util.UUID;
 @Entity
 @Table(name = "TB_USERS")
 public class UserModel implements Serializable {
-
     private static final long serialVersionUID = 1L;
 
     @Id
-    private UUID id;
+    private UUID userId;
 
     @Column(nullable = false, unique = true, length = 50)
     private String email;
@@ -42,8 +41,8 @@ public class UserModel implements Serializable {
     @Column
     private String imageUrl;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<CourseModel> courses;
 
 }
