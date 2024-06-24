@@ -4,6 +4,7 @@ import com.ead.course.controllers.dtos.SubscriptionDTO;
 import com.ead.course.models.CourseModel;
 import com.ead.course.services.CourseService;
 import com.ead.course.services.UserService;
+import com.ead.course.specifications.SpecificationTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -27,11 +28,17 @@ public class CourseUserController {
     private UserService userService;
 
     @GetMapping("/courses/{courseId}/users")
-    public ResponseEntity<Object> getAllUsersByCourse(@PathVariable(value = "courseId") UUID courseId,
+    public ResponseEntity<Object> getAllUsersByCourse(SpecificationTemplate.UserSPec spec,
+                                                      @PathVariable(value = "courseId") UUID courseId,
                                                       @PageableDefault(page = 0, size = 10, sort = "courseId",
                                                               direction = Sort.Direction.ASC) Pageable pageable) {
 
-        return ResponseEntity.status(HttpStatus.OK).body("");
+        Optional<CourseModel> courseModelOptional = courseService.findById(courseId);
+        if (courseModelOptional.isEmpty())
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course not found");
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                userService.findAll(SpecificationTemplate.userCourseId(courseId).and(spec), pageable));
     }
 
 
@@ -47,7 +54,6 @@ public class CourseUserController {
         //verificar state transfer
         return ResponseEntity.status(HttpStatus.CREATED).body("");
     }
-
 
 
 }

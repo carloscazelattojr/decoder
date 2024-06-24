@@ -10,6 +10,7 @@ Em estudos
 - PostgreSQL
 - Java
 - Spring Framework
+- [RabbitMQ](https://www.cloudamqp.com)
 
 ## Microservices: EAD
 

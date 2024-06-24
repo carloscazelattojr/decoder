@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -95,7 +96,11 @@ public class CourseController {
                                                                    direction = Sort.Direction.ASC) Pageable pageable,
                                                            @RequestParam(required = false) UUID userId) {
 
-        return ResponseEntity.status(HttpStatus.OK).body(courseService.findAll(spec, pageable));
+        Specification<CourseModel> specification = (userId != null)
+                ? SpecificationTemplate.courseCourseId(userId).and(spec)
+                : spec;
+
+        return ResponseEntity.status(HttpStatus.OK).body(courseService.findAll(specification, pageable));
     }
 
     @GetMapping("/{courseId}")

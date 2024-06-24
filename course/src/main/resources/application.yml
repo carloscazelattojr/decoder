@@ -7,12 +7,12 @@ spring:
   application:
     name: ead-course-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/ead-course
+    url: jdbc:postgresql://localhost:5432/ead-course-v2
     username: root
     password: root
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -20,6 +20,9 @@ spring:
   output:
     ansi:
       enabled: always
+  rabbitmq:
+    addresses: amqps://inakicxl:1HcOjdl5xIKSdMsXCO-nqAjrZ_p6PIJt@crow.rmq.cloudamqp.com/inakicxl
+
 
 logging:
   level:
