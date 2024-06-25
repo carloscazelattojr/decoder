@@ -26,3 +26,11 @@ Em estudos
 - Broker Pattern e Mediator Pattern
 - Event Notification Pattern
 - Event-Carried State Transfer Pattern
+
+## Architecture
+
+<div align="center">
+  <a href="#">
+      <img src="https://github.com/carloscazelattojr/decoder/blob/main/architecture.jpg" width="800" alt="preview" />
+  </a>
+</div>
