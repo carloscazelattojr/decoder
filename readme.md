@@ -18,7 +18,7 @@ Em estudos
 - Course
 - Notification
 
-## Patterns uitlizados
+## Patterns utilizados
 
 - API Gateway Pattern
 - API Composition Pattern
@@ -26,6 +26,7 @@ Em estudos
 - Broker Pattern e Mediator Pattern
 - Event Notification Pattern
 - Event-Carried State Transfer Pattern
+- Circuit Breaker Pattern
 
 ## Architecture
 
