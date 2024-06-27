@@ -3,6 +3,7 @@ package com.ead.authuser.client;
 import com.ead.authuser.controllers.dtos.CourseDTO;
 import com.ead.authuser.controllers.dtos.ResponsePageDTO;
 import com.ead.authuser.services.UtilsService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,6 +34,8 @@ public class CourseClient {
     @Value("${ead.api.url.course}")
     private String REQUEST_URL_COURSE;
 
+    //@Retry(name = "myRetry", fallbackMethod = "retryFallback")
+    @CircuitBreaker(name ="circuitbreakerInstance", fallbackMethod = "circuitbreakerfallback")
     public Page<CourseDTO> getAllCoursesByUser(UUID userId, Pageable pageable) {
 
         List<CourseDTO> listResult = null;
@@ -42,7 +46,7 @@ public class CourseClient {
 
         List<CourseDTO> searchResult = null;
         ResponseEntity<ResponsePageDTO<CourseDTO>> result = null;
-
+        System.out.println("----- Start Request ao Course Microservice -------");
         try {
             ParameterizedTypeReference<ResponsePageDTO<CourseDTO>> responseType = new ParameterizedTypeReference<ResponsePageDTO<CourseDTO>>() {
             };
@@ -57,5 +61,19 @@ public class CourseClient {
 
         return new PageImpl<>(searchResult);
     }
+
+    public Page<CourseDTO> retryFallback(UUID userId, Pageable pageable, Throwable t) {
+        log.error("Inside retry retryfallback, cause: {}", t.toString());
+        List<CourseDTO> searchResult = new ArrayList<>();
+        return new PageImpl<>(searchResult);
+    }
+
+    public Page<CourseDTO> circuitbreakerfallback(UUID userId, Pageable pageable, Throwable t) {
+        log.info("Inside retry circuitbreakerfallback, cause: {}", t.toString());
+        System.out.println("------ FALLBACK ----");
+        List<CourseDTO> searchResult = new ArrayList<>();
+        return new PageImpl<>(searchResult);
+    }
+
 
 }
