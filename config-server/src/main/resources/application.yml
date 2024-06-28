@@ -4,6 +4,14 @@ server:
 spring:
   application:
     name: ead-config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/carloscazelattojr/decoder/tree/configserver/ead-config-server-repo
+          default-label: configserver
+#          username:
+#          password:
 
 eureka:
   client:
