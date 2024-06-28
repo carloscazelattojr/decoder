@@ -14,9 +14,12 @@ Em estudos
 
 ## Microservices: EAD
 
+- API-Gateway
+- Service-Registry
 - AuthUser
 - Course
 - Notification
+- Config-Server
 
 ## Patterns utilizados
 
@@ -27,6 +30,8 @@ Em estudos
 - Event Notification Pattern
 - Event-Carried State Transfer Pattern
 - Circuit Breaker Pattern
+- Global Config Management Pattern
+
 
 ## Architecture
 
