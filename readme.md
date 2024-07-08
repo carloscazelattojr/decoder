@@ -19,7 +19,7 @@ Em estudos
 - AuthUser
 - Course
 - Notification
-- Config-Server
+- [Config-File](https://github.com/carloscazelattojr/ead-config-server)
 
 ## Patterns utilizados
 
