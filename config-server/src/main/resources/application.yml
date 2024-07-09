@@ -8,11 +8,8 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/carloscazelattojr/ead-config-server
+          uri: https://github.com/carloscazelattojr/ead-config-server-repo
           default-label: main
-#          username:
-#          password:
-
 ead:
   configServer:
     username: configserver

@@ -12,10 +12,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Value(value = "${ead.serviceRegistry.username}")
+    @Value("${ead.serviceRegistry.username}")
     private String username;
 
-    @Value(value = "${ead.serviceRegistry.password}")
+    @Value("${ead.serviceRegistry.password}")
     private String password;
 
     @Override
@@ -36,11 +36,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser(username)
                 .password(passwordEncoder().encode(password))
                 .roles("ADMIN");
+
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 
 }
